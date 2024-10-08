@@ -37,24 +37,61 @@ const {password,email}=req.body
 
 
     const validuser= await User.findOne({email})
-if(!validuser)
+    if(!validuser)
     return res.json({message:"user doesnt exist",success:"false"})
 
-const validpass=bcryptjs.compareSync(password,validuser.password)
-if(!validpass){
-    return res.json({message:"wrong credentials",success:"false"})
-}
+         const validpass=bcryptjs.compareSync(password,validuser.password)
+        if(!validpass)
+            {
+          return res.json({message:"wrong credentials",success:"false"})
+          }
  
-try{const token=jwt.sign({id:validuser._id},process.env.JWT_SECRET)
+              try{const token=jwt.sign({id:validuser._id},process.env.JWT_SECRET)
 
- const {password:pass,...rest}=validuser._doc
+                          const {password:pass,...rest}=validuser._doc
 
- return res.cookie("access_token",token,{httpOnly:true}).status(200).json({rest,success:"true"})}
- catch(e){
-    return res.json({message:"something went wrong",success:"false"})
+              return res.cookie("access_token",token,{httpOnly:true}).status(200).json({rest,success:"true"})}
+         catch(e)
+         {
+                      return res.json({message:"something went wrong",success:"false"})
     
- }
+           }
+})
 
+
+router.post("/google",async(req,res)=>{
+    console.log(req.body)
+
+    const {username,email,photo}=req.body
+
+try{
+
+    const validuser=await User.findOne({email:email})
+    if(validuser)
+    {
+        const token=jwt.sign({id:validuser._id},process.env.JWT_SECRET)
+    const {password:pass,...rest}=validuser._doc
+
+    res.cookie("access_token",token,{httpOnly:true}).status(200).json({rest})
+    }else{
+
+        const password = Math.random().toString(36).slice(-8); 
+
+         const hashedpassword=bcryptjs.hashSync(password,10)
+         const user=await User.create({username:username.split(" ").join(""),email:email,password:hashedpassword,avatar:photo})
+         const token=jwt.sign({id:user._id},process.env.JWT_SECRET)
+         const {password:pass,...rest}=user._doc
+     
+         res.cookie("access_token",token,{httpOnly:true}).status(200).json({rest})
+
+    }
+
+
+}
+catch(e){
+    console.log(e)
+    res.json({message:"something went wrong",success:"false"})
+}
 
 })
 

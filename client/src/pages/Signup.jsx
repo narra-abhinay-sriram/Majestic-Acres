@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate,Link } from 'react-router-dom'
+import Outh from '../components/Outh'
 
 const Signup = () => {
 
@@ -51,6 +52,8 @@ navigate("/signin")
        className='bg-slate-700 text-white p-3 rounded-md uppercase hover:opacity-95 disabled:opacity-55'>
           Sign up
        </button>
+       <Outh/>
+
     </form>
     <p className='text-red-700'>{error}</p>
     <div className='flex  gap-2 mt-3'>

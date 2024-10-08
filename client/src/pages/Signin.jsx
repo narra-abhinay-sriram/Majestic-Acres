@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
 import { useNavigate ,Link} from 'react-router-dom'
+import {useDispatch, useSelector} from "react-redux"
+import { signfailue, signsuccess, startsign } from '../redux/userSlice'
+import Outh from '../components/Outh'
+
 
 const Signup = () => {
 
 const [formdata,setformdata]=useState({})
-const [load,setload]=useState(false)
-const [error,seterror]=useState(null)
+
 const navigate=useNavigate()
+const dispatch=useDispatch()
+
+const {currentuser,load,error}=useSelector((store)=>store.user)
+console.log(currentuser+load+error)
 
 const handlechange=async(e)=>{
 
@@ -17,22 +24,20 @@ const handlechange=async(e)=>{
 }
 
 const handleclick=async()=>{
-  setload(true)
-
+dispatch(startsign())
   const resp=await fetch("http://localhost:3000/api/v1/user/signin",{method:'POST',
     headers: {
     'Content-Type': 'application/json', 
   },
     body:JSON.stringify(formdata)})
   const data=await resp.json()
-  console.log(data)
+  //console.log(data)
 if(data.success=="false")
 {
-  seterror(data.message)
-  setload(false)
+ dispatch(signfailue(data.message))
   return
 }
-setload(false)
+dispatch(signsuccess(data.rest))
 navigate("/home")
 }
 
@@ -51,6 +56,7 @@ navigate("/home")
        className='bg-slate-700 text-white p-3 rounded-md uppercase hover:opacity-95 disabled:opacity-55'>
           Sign In
        </button>
+       <Outh/>
     </form>
     <p className='text-red-700'>{error}</p>
     <div className='flex  gap-2 mt-3'>
