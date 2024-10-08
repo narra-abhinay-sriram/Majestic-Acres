@@ -2,6 +2,7 @@ import express from "express";
 import {User} from "../api/db.js"
 import bcryptjs from "bcryptjs"
 import jwt from "jsonwebtoken"
+import Middleware from "./middleware.js"
 const router=express.Router()
 
 router.post("/signup",async(req,res)=>{
@@ -94,6 +95,42 @@ catch(e){
 }
 
 })
+
+
+router.post("/update/:id",Middleware,async(req,res)=>{
+   // console.log(req.user + req.params.id)
+
+if(req.user!=req.params.id)
+    return res.status(403).json({message:"incorrect ID",success:false})
+
+try{
+    const hashedpassword=bcryptjs.hashSync(req.body.password,10)
+
+const updateduser=await User.findByIdAndUpdate(req.user,
+    {
+        $set:{ 
+            username:req.body.username,
+            email:req.body.email,
+            password:hashedpassword,
+            avatar:req.body.photo
+
+}},{new:true})
+
+const {password:pass, ...rest}=updateduser._doc
+
+return res.status(200).json({rest,success:"true"})
+
+
+}catch(e){
+    return res.status(403).json({
+        message:"error while updating",
+        success:"false"
+    })
+}
+
+
+})
+
 
 
 

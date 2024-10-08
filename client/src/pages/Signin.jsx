@@ -28,10 +28,10 @@ dispatch(startsign())
   const resp=await fetch("http://localhost:3000/api/v1/user/signin",{method:'POST',
     headers: {
     'Content-Type': 'application/json', 
-  },
+  },credentials: 'include',
     body:JSON.stringify(formdata)})
   const data=await resp.json()
-  //console.log(data)
+  console.log(data)
 if(data.success=="false")
 {
  dispatch(signfailue(data.message))

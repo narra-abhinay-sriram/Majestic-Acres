@@ -23,7 +23,7 @@ const handleclick=async()=>{
   const resp=await fetch("http://localhost:3000/api/v1/user/signup",{method:'POST',
     headers: {
     'Content-Type': 'application/json', 
-  },
+  },credentials: 'include',
     body:JSON.stringify(formdata)})
   const data=await resp.json()
 if(data.success=="false")
