@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 export default function Header() {
 const {currentuser}=useSelector(store=>store.user)
-console.log(currentuser)
+//console.log(currentuser)
 
   return (
     <header className='bg-slate-200 shadow-md'>
