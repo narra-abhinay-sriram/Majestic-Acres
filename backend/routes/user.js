@@ -98,13 +98,17 @@ catch(e){
 
 
 router.post("/update/:id",Middleware,async(req,res)=>{
-   // console.log(req.user + req.params.id)
+//    console.log(req.params.id)
+//    console.log(req.user)
 
 if(req.user!=req.params.id)
     return res.status(403).json({message:"incorrect ID",success:false})
+//console.log("hii")
 
 try{
+
     const hashedpassword=bcryptjs.hashSync(req.body.password,10)
+   // console.log(hashedpassword)
 
 const updateduser=await User.findByIdAndUpdate(req.user,
     {
@@ -112,9 +116,10 @@ const updateduser=await User.findByIdAndUpdate(req.user,
             username:req.body.username,
             email:req.body.email,
             password:hashedpassword,
-            avatar:req.body.photo
+            avatar:req.body.avatar
 
 }},{new:true})
+//console.log(updateduser)
 
 const {password:pass, ...rest}=updateduser._doc
 
@@ -122,8 +127,9 @@ return res.status(200).json({rest,success:"true"})
 
 
 }catch(e){
+    console.log(e)
     return res.status(403).json({
-        message:"error while updating",
+        message:"error while updating || update your password",
         success:"false"
     })
 }

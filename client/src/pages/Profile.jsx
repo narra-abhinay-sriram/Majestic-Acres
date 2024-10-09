@@ -2,16 +2,21 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import {getDownloadURL,getStorage,ref,uploadBytesResumable,} from 'firebase/storage';
 import { app } from '../firebase';
+import { useDispatch } from 'react-redux';
+import { startupdate, updatefailure, updatesuccess } from '../redux/userSlice';
 
 const Profile = () => {
 
-const {currentuser}=useSelector(store=>store.user)
-
+const {currentuser,load,error}=useSelector(store=>store.user)
+//console.log("http://localhost:3000/api/v1/user/update/"+currentuser._id)
+const dispatch=useDispatch()
 const fileref=useRef()
 const [file,setfile]=useState(undefined)
 const [fileperc,setfileperc]=useState(0)
 const [formdata,setformdata]=useState({})
 const [uploaderror,setuploaderror]=useState(false)
+const [update,setupdate]=useState(false)
+//console.log(formdata)
 
 
 
@@ -50,26 +55,60 @@ const handlefile=()=>{
       );
     }
   );
+}
 
+const handlechange=(e)=>{
 
+setformdata({...formdata,[e.target.id]:e.target.value})
 
+}
 
+const handlesubmit=async(e)=>{
+  e.preventDefault()
+
+  dispatch(startupdate())
+
+//console.log(formdata.avatar)
+const resp=await fetch("http://localhost:3000/api/v1/user/update/"+currentuser._id,
+  {
+    method:'POST',
+    headers:{
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body:JSON.stringify(formdata)
+})
+
+const data=await resp.json()
+//console.log(data)
+if(data.success=="false")
+{
+  dispatch(updatefailure(data.message))
+  setupdate(false)
+  return
+}
+dispatch(updatesuccess(data.rest))  
+setupdate(true)
+
+  
 }
 
 
   return (
     <div className='p-2 max-w-lg mx-auto'>
       <h2 className='font-bold text-3xl text-center my-5'>Profile</h2>
-      <form className='flex flex-col  gap-4'>
+  <form onSubmit={handlesubmit}
+  className='flex flex-col  gap-4'>
+
 <input onChange={(e)=>{
   const selectedfile=e.target.files[0]
   setfileperc(0)
   setuploaderror(false)
   setfile(selectedfile)
-  }}  type='file' ref={fileref}   hidden accept='image/*' />
+  }}  type='file' ref={fileref}  hidden accept='image/*' />
 
 <img onClick={()=>fileref.current.click()}
- src={formdata.avatar || currentuser.avatar} className='rounded-full h-24 w-24 object-cover cursor-pointer mt-2 self-center'  />
+ src={formdata.avatar || currentuser.avatar}  className='rounded-full h-24 w-24 object-cover cursor-pointer mt-2 self-center'  />
 
 <p className='text-sm self-center'>
 
@@ -81,13 +120,18 @@ const handlefile=()=>{
 </p>
 
 
-<input  type='text' placeholder='username' id='username'  className='border p-3 rounded-lg'/>
-<input  type='text' placeholder='email' id='email' className='border p-3 rounded-lg' />
-<input  type='password' placeholder='password' id='password' className='border p-3 rounded-lg' />
-<button className='bg-slate-700 p-3 hover:opacity-85 text-white uppercase rounded-lg'>Update</button>
+<input onChange={handlechange} type='text' defaultValue={currentuser.username} placeholder='username' id='username'  className='border p-3 rounded-lg'/>
+<input onChange={handlechange} type='text'defaultValue={currentuser.email} placeholder='email' id='email' className='border p-3 rounded-lg' />
+<input onChange={handlechange} type='password' placeholder='password' id='password' className='border p-3 rounded-lg' />
+<button className='bg-slate-700 p-3 hover:opacity-85 text-white uppercase rounded-lg'>
+  Update
+  </button>
 
-      </form>
-
+  </form>
+ 
+<p className='text-red-900 text-center'>{error?error:''}</p>
+<p className='text-green-700 text-center'>{update?"User is updated successfully":""}</p>
+     
 <div className='flex justify-between mt-3'>
 <span className='text-red-600 cursor-pointer font-semibold'> Delete Account</span>
 <span className='text-red-600 cursor-pointer font-semibold'> Sign Out</span>

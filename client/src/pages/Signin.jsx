@@ -13,7 +13,7 @@ const navigate=useNavigate()
 const dispatch=useDispatch()
 
 const {currentuser,load,error}=useSelector((store)=>store.user)
-console.log(currentuser+load+error)
+//console.log(currentuser+load+error)
 
 const handlechange=async(e)=>{
 
@@ -31,7 +31,7 @@ dispatch(startsign())
   },credentials: 'include',
     body:JSON.stringify(formdata)})
   const data=await resp.json()
-  console.log(data)
+  //console.log(data)
 if(data.success=="false")
 {
  dispatch(signfailue(data.message))
@@ -44,9 +44,7 @@ navigate("/home")
   return (
     <div className='p-3 max-w-lg mx-auto'>
     <h1 className='font-bold text-3xl text-center my-7'>Sign In</h1>
-    <form onSubmit={(e)=>{e.preventDefault()}}
-    
-    className='flex flex-col gap-4'> 
+    <form onSubmit={(e)=>{e.preventDefault()}} className='flex flex-col gap-4'> 
       
        <input onChange={handlechange} type='text' placeholder='email'id='email' className='border p-3 rounded-md'/>
        <input onChange={handlechange} type='password' placeholder='password'id='password' className='border p-3 rounded-md'/>
