@@ -15,4 +15,22 @@ router.post("/create",Middleware,async(req,res)=>{
 
 })
 
+router.get("/:id",Middleware,async(req,res)=>{
+
+    if(req.user!=req.params.id)
+    {
+        return res.status(403).json({message:"not authorized",success:false})
+    }
+    try{
+
+    const listing=await Listing.findOne({userRef:req.params.id})
+    return res.status(200).json({listing,success:true})
+
+    }catch(e){
+
+        return res.status(403).json({message:"error while sending listing",success:false})
+    }
+
+})
+
 export default router
