@@ -4,6 +4,7 @@ import {getDownloadURL,getStorage,ref,uploadBytesResumable,} from 'firebase/stor
 import { app } from '../firebase';
 import { useDispatch } from 'react-redux';
 import { deletefailure, deletestart, deletesuccess, startupdate, updatefailure, updatesuccess } from '../redux/userSlice';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
 
@@ -174,13 +175,17 @@ const res=await fetch("http://localhost:3000/api/v1/user/signout/",{
 <button className='bg-slate-700 p-3 hover:opacity-85 text-white uppercase rounded-lg'>
   Update
   </button>
-
+  <Link to={"/createlisting"} className='bg-green-700 text-white uppercase rounded-md hover:opacity-75 p-3 text-center'>
+  create listing
+</Link>
   </form>
  
   <p className='text-red-900 text-center'>
   {error && typeof error === 'object' ? error.message : error}
 </p>
 <p className='text-green-700 text-center'>{update?"User is updated successfully":""}</p>
+
+
      
 <div className='flex justify-between mt-3'>
 <span  onClick={handledelete} className='text-red-600 cursor-pointer font-semibold'> Delete Account</span>

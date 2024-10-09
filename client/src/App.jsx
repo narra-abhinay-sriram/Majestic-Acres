@@ -6,6 +6,7 @@ import About from "./pages/About"
 import Profile from "./pages/Profile"
 import Header from "./components/Header"
 import Privateroute from "./components/Privateroute"
+import Createlist from "./pages/createlist"
 
 const App = () => {
   return (
@@ -18,8 +19,10 @@ const App = () => {
 <Route path="/about" element={<About/>} />
 <Route element={<Privateroute/>}>
   <Route path="/profile" element={<Profile/>} />
+  <Route path="/createlisting" element ={<Createlist/>} />
 
 </Route>
+
 
 
 

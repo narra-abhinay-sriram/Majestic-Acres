@@ -31,7 +31,7 @@ dispatch(startsign())
   },credentials: 'include',
     body:JSON.stringify(formdata)})
   const data=await resp.json()
-  //console.log(data)
+  console.log(data)
 if(data.success=="false")
 {
  dispatch(signfailue(data.message))

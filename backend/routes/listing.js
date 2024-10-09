@@ -1,6 +1,6 @@
 import express from "express";
-import { Listing } from "../api/db";
-import Middleware from "./middleware";
+import { Listing } from "../api/db.js";
+import Middleware from "./middleware.js";
 const router =express.Router()
 
 router.post("/create",Middleware,async(req,res)=>{
