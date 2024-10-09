@@ -137,6 +137,27 @@ return res.status(200).json({rest,success:"true"})
 
 })
 
+router.delete("/delete/:id",Middleware,async(req,res)=>{
+
+    if (req.user!=req.params.id)
+    {
+        return res.status(403).json({message:"Incorrect Id" ,success:"false"})
+    }
+
+    try{
+await User.findByIdAndDelete(req.user)
+res.clearCookie("access_token")
+
+return res.status(200).json({message:"User deleted successfully",success:"true"})
+
+    } catch(e){
+        console.log(e)
+
+        return res.status(403).json({message:"error while deleting",success:"false"})
+    }
+
+})
+
 
 
 
