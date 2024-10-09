@@ -158,6 +158,19 @@ return res.status(200).json({message:"User deleted successfully",success:"true"}
 
 })
 
+router.post("/signout",(req,res)=>{
+
+
+try{
+    res.clearCookie("access_token")
+    return res.status(200).json({message:"user signedout successfully",success:"true"})
+}catch(e){
+
+    return res.status.json({message:'error while signing out',success:"false"})
+}
+
+})
+
 
 
 

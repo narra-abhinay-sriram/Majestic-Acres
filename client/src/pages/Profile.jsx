@@ -120,6 +120,26 @@ dispatch(deletesuccess())
 
 }
 
+const handlesignout=async()=>{
+
+const res=await fetch("http://localhost:3000/api/v1/user/signout/",{
+  method:"POST",
+  headers:{
+    'Content-Type': 'application/json',
+  },
+  credentials: 'include',})
+
+  const data=await res.json()
+  if(data.success=="false")
+    {
+      dispatch(deletefailure(data))
+      return
+    }
+    
+    dispatch(deletesuccess())
+
+}
+
 
 
   return (
@@ -164,7 +184,7 @@ dispatch(deletesuccess())
      
 <div className='flex justify-between mt-3'>
 <span  onClick={handledelete} className='text-red-600 cursor-pointer font-semibold'> Delete Account</span>
-<span className='text-red-600 cursor-pointer font-semibold'> Sign Out</span>
+<span onClick={handlesignout} className='text-red-600 cursor-pointer font-semibold'> Sign Out</span>
 
 
 </div>
