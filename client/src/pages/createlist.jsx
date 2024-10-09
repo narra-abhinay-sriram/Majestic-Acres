@@ -213,7 +213,7 @@ if(formdata.regularPrice<formdata.discountedPrice)
             <input type='number' id='regularPrice' min='1' max='1000000000000000000000000000000' required className='p-3 w-28 h-10 border border-gray-600 rounded-lg' onChange={handlechange} value={formdata.regularPrice} />
             <div className='flex flex-col items-center ml-2'>
                 <span>Regular Price</span>
-            { formdata.type=='sale' && <p className='text-xs'>₹ /month</p>}
+            { formdata.type=='rent' && <p className='text-xs'>₹ /month</p>}
             </div>
         </div>
         {
@@ -222,7 +222,7 @@ if(formdata.regularPrice<formdata.discountedPrice)
         <input type='number' id='discountedPrice' min='0' max='10000000000000000' required className='p-3 w-28 h-10 border border-gray-600 rounded-lg' onChange={handlechange} value={formdata.discountedPrice} />
         <div className='flex flex-col items-center ml-2'>
             <span>Discounted Price</span>
-            { formdata.type=='sale' && <p className='text-xs'>₹ /month</p>}
+            { formdata.type=='rent' && <p className='text-xs'>₹ /month</p>}
         </div>
     </div>
         

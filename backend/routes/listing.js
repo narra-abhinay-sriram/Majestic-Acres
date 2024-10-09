@@ -15,7 +15,7 @@ router.post("/create",Middleware,async(req,res)=>{
 
 })
 
-router.get("/:id",Middleware,async(req,res)=>{
+router.get("/show/:id",Middleware,async(req,res)=>{
 
     if(req.user!=req.params.id)
     {
@@ -23,7 +23,7 @@ router.get("/:id",Middleware,async(req,res)=>{
     }
     try{
 
-    const listing=await Listing.findOne({userRef:req.params.id})
+    const listing=await Listing.find({userRef:req.params.id})
     return res.status(200).json({listing,success:true})
 
     }catch(e){

@@ -17,6 +17,10 @@ const [fileperc,setfileperc]=useState(0)
 const [formdata,setformdata]=useState({})
 const [uploaderror,setuploaderror]=useState(false)
 const [update,setupdate]=useState(false)
+const[listshowload,setlistshowload]=useState(false)
+const[listshowerror,setlistshowerror]=useState('')
+const [userlistings,setuserlistings]=useState([])
+
 //console.log(formdata)
 
 
@@ -143,7 +147,34 @@ const res=await fetch("http://localhost:3000/api/v1/user/signout/",{
 
 }
 
+const handleshowlistings=async()=>{
 
+  setlistshowload(true)
+  const resp=await fetch('http://localhost:3000/api/v1/listing/show/'+currentuser._id,
+  {
+    method:'GET',
+    headers:{
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  })
+const data=await resp.json()
+console.log(data.listing)
+setuserlistings(data.listing)
+if(data.success=="false")
+{
+  setlistshowerror(data.message)
+  setlistshowload(false)
+}
+
+setlistshowerror('')
+  setlistshowload(false)
+
+
+}
+
+
+//console.log(userlistings)
 
   return (
     <div className='p-2 max-w-lg mx-auto'>
@@ -195,6 +226,33 @@ const res=await fetch("http://localhost:3000/api/v1/user/signout/",{
 
 
 </div>
+<button disabled={listshowload}
+onClick={handleshowlistings} className='text-green-800 w-full uppercase font-semibold '>
+  {listshowload ?"Getting listings":"Show Listings"}</button>
+  {listshowerror && <p className='text-red-800'>{listshowerror}</p>}
+
+  {userlistings && userlistings.length>1 && userlistings.map((listing)=>(
+    <div key={listing._id} className='border border-gray-300 rounded-lg p-4 my-2 flex justify-between items-center gap-4'>
+
+<Link to={`/listing/${listing._id}`}>
+<img 
+ src={listing.imageUrl[0]} alt='listing img' className='w-16 h-16 object-cover'  />
+ </Link>
+ <Link to={`/listing/${listing._id}`} className='text-slate-900 font-semibold hover:underline truncate flex-1'>
+<p>{listing.name}</p>
+ </Link>
+ <div className='flex flex-col items-center'>
+  <button className='text-red-600 uppercase'>
+    delete
+  </button>
+
+  <button className='text-green-800 uppercase'>Edit</button>
+  
+   </div>
+
+
+    </div>
+  ))}
 
     </div>
   )
