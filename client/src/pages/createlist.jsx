@@ -1,14 +1,94 @@
-import React from 'react'
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
+import React, { useState } from 'react'
+import { app } from '../firebase'
+import { FaPage4 } from 'react-icons/fa'
 
 export default function Createlist() {
+
+
+const [files,setfliles]=useState([])
+const [formdata,setformdata]=useState({
+    imageUrl:[]
+})
+console.log(formdata)
+
+const [imageerror,setimageerror]=useState("")
+const [uploadimage,setuploadimage]=useState(false)
+
+
+const handleimagesubmit=(e)=>{
+    e.preventDefault()
+ if(files.length>0 && files.length + formdata.imageUrl.length   <7)
+
+    {
+        setuploadimage(true)
+        setimageerror("")
+        const promises=[]
+        for(let i=0;i<files.length;i++)
+        {
+            promises.push(storeImage(files[i]))
+        }
+        Promise.all(promises).then((url)=>{
+            setformdata({...formdata,imageUrl:formdata.imageUrl.concat(url)})
+            setimageerror("")
+            setuploadimage(false)
+            
+        }).catch((e)=>{
+            setimageerror("image upload failed (3MB max)")
+            setuploadimage(false)
+        })
+    }else {
+        setimageerror("you can upload a maximum of 6 images")
+        setuploadimage(false)
+    }
+
+}
+const storeImage=async(file)=>{
+
+return new Promise ((resolve,reject)=>{
+
+const storage=getStorage(app)
+const filename=new Date().getTime() + file.name 
+
+const storageRef=ref(storage,filename)
+const uploadTask=uploadBytesResumable(storageRef,file)
+uploadTask.on(
+    'state_changed',
+    (snapshot) => {
+      const progress =
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    },
+    (error) => {
+      reject(error);
+    },
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+        resolve(downloadURL)      );
+    }
+  );
+
+})
+}
+
+const handledeleteimage=(index)=>{
+    setformdata({
+        ...formdata,
+        imageUrl:formdata.imageUrl.filter((_,i)=>i!=index)
+    })
+
+
+}
+
+
+
   return (
     <main className='p-3 max-w-4xl mx-auto'>
-<h1 className='text-3xl font-semibold my-7 text-center'>
-    Create Listing
-</h1>
-<form className='flex flex-col sm:flex-row gap-4' >
+         <h1 className='text-3xl font-semibold my-7 text-center'>
+               Create Listing
+         </h1>
+       <form className='flex flex-col sm:flex-row gap-4' >
 
-<div className='flex flex-col gap-4 flex-1'>
+         <div className='flex flex-col gap-4 flex-1'>
     <input type='text' placeholder='Title' id='name' className='p-3 border rounded-lg' required minLength='10' maxLength='64' />
     <textarea type='text' placeholder='description' id='description' className='p-3 border rounded-lg' required  />
     <input type='text' placeholder='address' id='address' className='p-3 border rounded-lg' required  />
@@ -62,27 +142,43 @@ export default function Createlist() {
     </div>
 
 
-</div>
+         </div>
 
-<div className='flex flex-col gap-4 flex-1'>
+    <div className='flex flex-col gap-4 flex-1'>
 
-    <p className='font-bold'>Images:
-        <span className='font-normal text-gray-800 ml-2'>The First image will be the cover (max6)</span>
-    </p>
-    <div className='flex gap-4'>
+         <p className='font-bold'>Images:
+          <span className='font-normal text-gray-800 ml-2'>The First image will be the cover (max6)</span>
+        </p>
+      <div className='flex gap-4'>
 
-        <input  type='file' id='images'  accept='/image/*' multiple className='p-3 border  border-gray-400 rounded w-full' />
-        <button className='p-3 text-green-700 border border-green-700 rounded uppercase hover:opacity-65 disabled:opacity-15 hover:shadow-xl '>
-        UPLOAD
-        </button>
+          <input onChange={(e)=>setfliles(e.target.files)}
+             type='file' id='images'  accept='/image/*' multiple className='p-3 border  border-gray-400 rounded w-full' />
+           <button disabled={uploadimage}
+           onClick={handleimagesubmit}
+             className='p-3 text-green-700 border border-green-700 rounded uppercase hover:opacity-65 disabled:opacity-15 hover:shadow-xl '>
+              {uploadimage ? "Uploading...":"Upload"}
+           </button>
 
-    </div>
 
-    <button className='bg-gray-800 text-white rounded-md hover:opacity-80 uppercase disabled:opacity-70 p-3'>
-    create listing
-    </button>
 
-</div>
+       </div>
+       <p className='text-red-700'>{imageerror && imageerror}</p>
+       {
+        formdata.imageUrl.length>0 && formdata.imageUrl.map((url,index)=>(
+        <div key={url} className='flex justify-between border p-3 items-center'>
+     <img src={url} alt='listing image'  className='w-20 h-20 object-contain rounded-md'/>
+     <button onClick={()=>handledeleteimage(index)}
+       className='text-red-600 text-lg p-3 uppercase hover:opacity-55'>Delete</button>
+
+        </div>))
+       }
+
+
+         <button className='bg-gray-800 text-white rounded-md hover:opacity-80 uppercase disabled:opacity-70 p-3'>
+            create listing
+         </button>
+
+     </div>
 
 
 </form>
