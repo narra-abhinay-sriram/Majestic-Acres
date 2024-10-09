@@ -128,7 +128,9 @@ const res=await fetch("http://localhost:3000/api/v1/user/signout/",{
   headers:{
     'Content-Type': 'application/json',
   },
-  credentials: 'include',})
+  credentials: 'include',
+  
+})
 
   const data=await res.json()
   if(data.success=="false")
