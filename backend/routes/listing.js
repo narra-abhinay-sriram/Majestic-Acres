@@ -34,6 +34,7 @@ router.get("/show/:id",Middleware,async(req,res)=>{
 })
 
 router.delete("/delete/:id",Middleware,async(req,res)=>{
+    
 
 const listing=await Listing.findById(req.params.id)
 if(!listing)
@@ -53,12 +54,14 @@ catch(e){
 })
 
 router.post("/update/:id",Middleware,async(req,res)=>{
+    //console.log(req.params.id)
 
     const listing=await Listing.findById(req.params.id)
+    //console.log(listing)
     if(!listing)
         return res.status(403).json({message:"listing not found",success:"false"})
 
-    if(req.user!=req.listing.userRef)
+    if(req.user!=listing.userRef)
     {
         return res.status(403).json({message:"Edit your own listings",success:"false"})
 
@@ -74,6 +77,22 @@ router.post("/update/:id",Middleware,async(req,res)=>{
         return res.status(403).json({message:"Error while editing the list",success:"false"})
 
     }
+})
+
+
+router.get('/get/:id',async(req,res)=>{
+
+try{
+
+const listing=await Listing.findOne({_id:req.params.id})
+return res.status(200).json(listing)
+
+}
+catch(e){
+    console.log(e)
+    return res.status(403).json({message:"error while getting listing",success:"false"})
+}
+
 })
 
 export default router

@@ -7,6 +7,7 @@ import Profile from "./pages/Profile"
 import Header from "./components/Header"
 import Privateroute from "./components/Privateroute"
 import Createlist from "./pages/createlist"
+import Editlist from "./pages/editlist"
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
 <Route element={<Privateroute/>}>
   <Route path="/profile" element={<Profile/>} />
   <Route path="/createlisting" element ={<Createlist/>} />
+  <Route path="/Editlist/:id" element ={<Editlist/>} />
 
 </Route>
 

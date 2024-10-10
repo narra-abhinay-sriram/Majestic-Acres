@@ -159,7 +159,7 @@ const handleshowlistings=async()=>{
     credentials: 'include',
   })
 const data=await resp.json()
-console.log(data.listing)
+//console.log(data.listing)
 setuserlistings(data.listing)
 if(data.success=="false")
 {
@@ -265,7 +265,7 @@ onClick={handleshowlistings} className='text-green-800 w-full uppercase font-sem
     delete
   </button>
 
-  <button className='text-green-800 uppercase'>Edit</button>
+  <Link to={`/Editlist/${listing._id}`}><button className='text-green-800 uppercase'>Edit</button></Link>
   
    </div>
 
