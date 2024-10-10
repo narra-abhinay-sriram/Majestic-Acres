@@ -8,6 +8,7 @@ import Header from "./components/Header"
 import Privateroute from "./components/Privateroute"
 import Createlist from "./pages/createlist"
 import Editlist from "./pages/editlist"
+import Listing from "./pages/Listing"
 
 const App = () => {
   return (
@@ -24,6 +25,8 @@ const App = () => {
   <Route path="/Editlist/:id" element ={<Editlist/>} />
 
 </Route>
+
+<Route path="/listing/:listing"  element={<Listing/>} />
 
 
 
