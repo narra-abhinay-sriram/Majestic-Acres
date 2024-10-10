@@ -52,4 +52,28 @@ catch(e){
 
 })
 
+router.post("/update/:id",Middleware,async(req,res)=>{
+
+    const listing=await Listing.findById(req.params.id)
+    if(!listing)
+        return res.status(403).json({message:"listing not found",success:"false"})
+
+    if(req.user!=req.listing.userRef)
+    {
+        return res.status(403).json({message:"Edit your own listings",success:"false"})
+
+    }
+    try{
+
+     const updatedlist=await Listing.findByIdAndUpdate(req.params.id,req.body,{new:true})
+
+     return res.status(200).json(updatedlist)
+
+
+    }catch(e){
+        return res.status(403).json({message:"Error while editing the list",success:"false"})
+
+    }
+})
+
 export default router
