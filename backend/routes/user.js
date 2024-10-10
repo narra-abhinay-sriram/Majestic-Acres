@@ -170,6 +170,16 @@ try{
 }
 
 })
+router.get("/get/:id",async(req,res)=>{
+
+const user=await User.findById(req.params.id)
+if(!user)
+    return res.json({message:"user not found",success:false})
+
+const {password:pass,...rest}=user._doc
+return res.json(rest)
+
+})
 
 
 
