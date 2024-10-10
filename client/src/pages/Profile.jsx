@@ -169,7 +169,26 @@ if(data.success=="false")
 
 setlistshowerror('')
   setlistshowload(false)
+}
 
+const handledeletelisting=async(listing)=>{
+
+const resp=await fetch('http://localhost:3000/api/v1/listing/delete/'+listing,{
+  method:'DELETE',
+  headers:{
+    'Content-Type': 'application/json',
+  },
+  credentials: 'include',
+})
+
+const data=await resp.json()
+
+if(data.success!='false')
+{
+ 
+  setuserlistings((prev)=>prev.filter((list)=>list._id!=listing))
+  
+}
 
 }
 
@@ -231,7 +250,7 @@ onClick={handleshowlistings} className='text-green-800 w-full uppercase font-sem
   {listshowload ?"Getting listings":"Show Listings"}</button>
   {listshowerror && <p className='text-red-800'>{listshowerror}</p>}
 
-  {userlistings && userlistings.length>1 && userlistings.map((listing)=>(
+  {userlistings && userlistings.length>0 && userlistings.map((listing)=>(
     <div key={listing._id} className='border border-gray-300 rounded-lg p-4 my-2 flex justify-between items-center gap-4'>
 
 <Link to={`/listing/${listing._id}`}>
@@ -242,7 +261,7 @@ onClick={handleshowlistings} className='text-green-800 w-full uppercase font-sem
 <p>{listing.name}</p>
  </Link>
  <div className='flex flex-col items-center'>
-  <button className='text-red-600 uppercase'>
+  <button onClick={()=>handledeletelisting(listing._id)}  className='text-red-600 uppercase'>
     delete
   </button>
 
