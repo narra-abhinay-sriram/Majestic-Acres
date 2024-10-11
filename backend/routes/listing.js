@@ -95,4 +95,52 @@ catch(e){
 
 })
 
+router.get('/get/',async(req,res)=>{
+    try{
+
+const limit=req.query.limit || 9
+const startindex=parseInt(req.query.startindex) || 0
+
+let offer=req.query.offer
+if(offer==undefined || offer=='false')
+{
+    offer={$in:['true','false']}
+}
+
+let parking=req.query.parking
+if(parking==undefined || parking=='false')
+{
+    parking={$in:[true,false]}
+}
+
+let furnished=req.query.furnished
+if(furnished==undefined|| furnished=='false')
+{
+    furnished={$in:[true,false]}
+}
+
+let type=req.query.type
+if(type==undefined || type=='all')
+{
+    type={$in:['rent','sale']}
+}
+const searchterm=req.query.search || ''
+const sort=req.query.sort || 'createdAt'
+const order=req.query.order || 'desc'
+
+const listings=await Listing.find({
+ name:searchterm,
+ offer,
+ parking,
+ furnished,
+ type
+}).sort({[sort]:order}).limit(limit).skip(startindex)
+ return res.json(listings)
+
+    }
+    catch(e){
+        return res.json({message:'error while searching',success:'false'})
+    }
+})
+
 export default router
