@@ -38,7 +38,7 @@ router.delete("/delete/:id",Middleware,async(req,res)=>{
 
 const listing=await Listing.findById(req.params.id)
 if(!listing)
-    return req.status(403).json({message:"listing not found",success:"false"})
+    return res.status(403).json({message:"listing not found",success:"false"})
 
 if(req.user!=listing.userRef)
     return req.status(403).json({message:"delete your own listings",success:"false"})
@@ -84,6 +84,8 @@ router.get('/get/:id',async(req,res)=>{
 
 try{
 
+    
+
 const listing=await Listing.findOne({_id:req.params.id})
 return res.status(200).json(listing)
 
@@ -95,52 +97,37 @@ catch(e){
 
 })
 
-router.get('/get/',async(req,res)=>{
-    try{
+router.get('/get/', async (req, res) => {
+    //console.log(req.query);
+    try {
+        const limit = parseInt(req.query.limit) || 9;
+        const startindex = parseInt(req.query.startindex) || 0;
 
-const limit=req.query.limit || 9
-const startindex=parseInt(req.query.startindex) || 0
+        let offer = req.query.offer === 'true' ? true : req.query.offer === 'false' ? false : { $in: [true, false] };
+        let parking = req.query.parking === 'true' ? true : req.query.parking === 'false' ? false : { $in: [true, false] };
+        let furnished = req.query.furnished === 'true' ? true : req.query.furnished === 'false' ? false : { $in: [true, false] };
 
-let offer=req.query.offer
-if(offer==undefined || offer=='false')
-{
-    offer={$in:['true','false']}
-}
+        let type = req.query.type;
+        if (type === undefined || type === 'all') {
+            type = { $in: ['rent', 'sale'] };
+        }
 
-let parking=req.query.parking
-if(parking==undefined || parking=='false')
-{
-    parking={$in:[true,false]}
-}
+        const searchterm = req.query.searchterm || '';
+        const sort = req.query.sort || 'createdAt';
+        const order = req.query.order === 'asc' ? 1 : -1;
 
-let furnished=req.query.furnished
-if(furnished==undefined|| furnished=='false')
-{
-    furnished={$in:[true,false]}
-}
-
-let type=req.query.type
-if(type==undefined || type=='all')
-{
-    type={$in:['rent','sale']}
-}
-const searchterm=req.query.search || ''
-const sort=req.query.sort || 'createdAt'
-const order=req.query.order || 'desc'
-
-const listings=await Listing.find({
- name:searchterm,
- offer,
- parking,
- furnished,
- type
-}).sort({[sort]:order}).limit(limit).skip(startindex)
- return res.json(listings)
-
+        const listings = await Listing.find({
+            name: { $regex: searchterm, $options: 'i' },
+            offer,
+            parking,
+            furnished,
+            type,
+        }).sort({ [sort]: order }).limit(limit).skip(startindex);
+        
+        return res.json({ listings, success: true });
+    } catch (e) {
+        console.error(e);
+        return res.json({ message: 'Error while searching', success: false });
     }
-    catch(e){
-        return res.json({message:'error while searching',success:'false'})
-    }
-})
-
+});
 export default router

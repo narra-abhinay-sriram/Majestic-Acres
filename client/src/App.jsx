@@ -9,6 +9,7 @@ import Privateroute from "./components/Privateroute"
 import Createlist from "./pages/createlist"
 import Editlist from "./pages/editlist"
 import Listing from "./pages/Listing"
+import Search from "./pages/Search"
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
 </Route>
 
 <Route path="/listing/:listing"  element={<Listing/>} />
+<Route path="/search" element={<Search/>} />
 
 
 
