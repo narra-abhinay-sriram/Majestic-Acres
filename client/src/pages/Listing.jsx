@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import {Swiper,SwiperSlide} from 'swiper/react'
 import SwiperCore from "swiper"
 import {Navigation} from "swiper/modules"
 import "swiper/css/bundle"
-import { FaBath, FaBed, FaChair, FaMapMarkedAlt, FaMapMarkerAlt, FaParking, FaShare } from 'react-icons/fa'
+import { FaBath, FaBed, FaChair, FaMailBulk, FaMapMarkedAlt, FaMapMarkerAlt, FaParking, FaPhone, FaPhoneAlt, FaPhoneSquareAlt, FaPhoneVolume, FaShare } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
 import Contact from '../components/Contact'
 
@@ -120,6 +120,12 @@ listings.imageUrl.map(url=>(<SwiperSlide key={url}>
             </div>}
 
             {contact && <Contact listing={listings}/> }
+            {
+                !currentuser && <div className='flex  items-center mt-4'>
+                    <FaPhoneSquareAlt className='text-slate-700 w-10 h-10 '/>
+                    <Link to={'/signin'} className='text-xs md:text-sm  bg-slate-700 w-[45%] p-2 rounded-lg text-white uppercase hover:opacity-85 text-center'> Sign In to contact landlord </Link>
+                </div>
+            }
             
         </div>
      }

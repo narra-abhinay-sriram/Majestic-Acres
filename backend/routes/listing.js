@@ -103,7 +103,7 @@ router.get('/get/', async (req, res) => {
         const limit = parseInt(req.query.limit) || 9;
         const startindex = parseInt(req.query.startindex) || 0;
 
-        let offer = req.query.offer === 'true' ? true : req.query.offer === 'false' ? false : { $in: [true, false] };
+        let offer = req.query.offer === 'true' ? true  : { $in: [true, false] };
         let parking = req.query.parking === 'true' ? true : req.query.parking === 'false' ? false : { $in: [true, false] };
         let furnished = req.query.furnished === 'true' ? true : req.query.furnished === 'false' ? false : { $in: [true, false] };
 

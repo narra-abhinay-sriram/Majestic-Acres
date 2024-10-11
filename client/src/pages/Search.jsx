@@ -6,6 +6,7 @@ export default function Search() {
     const navigate=useNavigate()
     const[load,setload]=useState()
     const [listings,setlistings]=useState([])
+    const [showmore,setshowmore]=useState(false)
     console.log(listings)
     const [searchdata ,setsearchdata]=useState({
         searchterm:'',
@@ -80,29 +81,64 @@ navigate(`/search?${searchquery}`)
             const fetchlist=async()=>{
 
                 setload(true)
+                setshowmore(false)
                 
                 const searchquery=urlparams.toString()
                 //console.log(searchquery)
                 const resp=await fetch(`http://localhost:3000/api/v1/listing/get?${searchquery}`,{
-  method:'GET',
-  headers:{
-    'Content-Type': 'application/json',
-  },
-  credentials: 'include',
-})
-const data=await resp.json()
-setlistings(data)
-setload(false)
-}
-fetchlist()
+                                        method:'GET',
+                                        headers:{
+                                                  'Content-Type': 'application/json',
+                                                },
+                                         credentials: 'include',
+                                        })
+                const data=await resp.json()
+                if(data.length>8)
+                {
+                    setshowmore(true)
+                }
+                setlistings(data)
+                setload(false)
+                         }
+            fetchlist()
 
         
     },[location.search])
+    const showmoreclick= async()=>{
+        const numberoflistings=listings.length
+        const startindex=numberoflistings
+        const urlparams=new URLSearchParams(location.search)
+        urlparams.set('startindex',startindex)
+
+            setload(true)
+            setshowmore(false)
+            
+            const searchquery=urlparams.toString()
+            //console.log(searchquery)
+            const resp=await fetch(`http://localhost:3000/api/v1/listing/get?${searchquery}`,{
+                                    method:'GET',
+                                    headers:{
+                                              'Content-Type': 'application/json',
+                                            },
+                                     credentials: 'include',
+                                    })
+            const data=await resp.json()
+            if(data.length>8)
+            {
+                setshowmore(true)
+            }else setshowmore(false)
+            setlistings([...listings,...data])
+            console.log(listings)
+            setload(false)
+                     
+           
+        
+    }
 
 
   return (
     <div className='flex flex-col md:flex-row'>
-      <div className='p-8 border-b-2 md:border-r-2 md:min-h-screen'>
+      <div className='p-8 border-b-2 md:border-r-2 md:min-h-screen md:min-w-[28%]'>
         <form  onSubmit={handlesubmit} className='flex flex-col gap-8'>
      <div className='flex items-center gap-3'>
         <label className='font-semibold whitespace-nowrap'>Search Term:</label>
@@ -165,7 +201,15 @@ fetchlist()
    {load &&  <p className='text-xl text-slate-700 text-center w-full'>
               Loading...
             </p>}
-            {!load && listings.length>0 && listings.map(listing=><List key={listing} listing={listing} />)}
+            {!load && listings.length>0 && listings.map(listing=><List key={listing._id} listing={listing} />)}
+            {showmore &&
+                <button
+                 onClick={showmoreclick}
+                  className='text-green-800 hover:underline p-7 w-full'>show more
+                  
+               </button>
+
+            }
      </div>
       </div>
     </div>
