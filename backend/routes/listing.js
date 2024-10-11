@@ -124,7 +124,7 @@ router.get('/get/', async (req, res) => {
             type,
         }).sort({ [sort]: order }).limit(limit).skip(startindex);
         
-        return res.json({ listings, success: true });
+        return res.json(listings);
     } catch (e) {
         console.error(e);
         return res.json({ message: 'Error while searching', success: false });

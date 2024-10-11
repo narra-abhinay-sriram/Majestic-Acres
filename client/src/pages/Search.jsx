@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import List from '../components/List'
 
 export default function Search() {
     const navigate=useNavigate()
@@ -159,6 +160,13 @@ fetchlist()
      <h1 className='text-3xl font-bold p-3 text-slate-700 mt-5'>
         Search Results
      </h1>
+     <div className='p-8 flex flex-wrap gap-4'>
+     {!load && listings.length==0 && <p className='text-xl text-slate-700 mx-auto text-center w-full'>No properties matched your search <b className='text-2xl'>:{'('}</b> </p>}
+   {load &&  <p className='text-xl text-slate-700 text-center w-full'>
+              Loading...
+            </p>}
+            {!load && listings.length>0 && listings.map(listing=><List key={listing} listing={listing} />)}
+     </div>
       </div>
     </div>
   )

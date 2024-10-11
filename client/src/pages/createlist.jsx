@@ -129,7 +129,7 @@ const handlesubmit=async(e)=>{
     e.preventDefault()
 if(formdata.imageUrl.length<1)
     return setsubmiterror("Upload atleast One image")
-if(formdata.regularPrice<formdata.discountedPrice)
+if(Number(formdata.regularPrice)<Number(formdata.discountedPrice))
 {
     return setsubmiterror("Discounted price must be less than regular price")
 }

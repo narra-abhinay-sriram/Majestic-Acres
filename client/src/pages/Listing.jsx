@@ -73,8 +73,8 @@ listings.imageUrl.map(url=>(<SwiperSlide key={url}>
 
         
             <p className='text-2xl font-bold'>
-                {listings.name} - INR {' '}
-                {listings.regularPrice.toLocaleString('en-us')}
+                {listings.name} - ₹ {' '}
+                {listings.regularPrice.toLocaleString('en-US')}
                  {listings.type=='rent'&& ' /month'}
 
             </p>
@@ -88,7 +88,7 @@ listings.imageUrl.map(url=>(<SwiperSlide key={url}>
                     {listings.type=='rent'? 'For Rent':'For Sale'}
                 </p>
                 <p className='text-white font-semibold bg-green-700 p-2 rounded-md w-full max-w-[200px] text-center'>
-                    INR{' '}{ listings.offer &&  listings.discountedPrice} Off
+                    { listings.offer ? '₹'+'  '+listings.discountedPrice.toLocaleString('en-US') +' off':'No Offer' } 
                 </p></div>
             <p className='text-slate-900'><b className='text-black font-semibold'>Description-</b> {listings.description}</p>
             <ul className='text-green-900 font-semibold text-sm  flex flex-wrap items-center gap-4 sm:gap-6'>
