@@ -1,0 +1,12 @@
+{
+  "name": "mern-state",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build":"cd backend && npm install && cd client && npm run install && npm run build "
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
