@@ -38,7 +38,7 @@ if(data.success=="false")
   return
 }
 dispatch(signsuccess(data.rest))
-navigate("/home")
+navigate("/")
 }
 
   return (

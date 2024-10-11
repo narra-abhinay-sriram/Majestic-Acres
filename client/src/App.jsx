@@ -14,7 +14,10 @@ import Search from "./pages/Search"
 const App = () => {
   return (
     <BrowserRouter>
+    <div className="fixed z-10  w-screen">
     <Header/>
+    </div>
+    
    <Routes>
 <Route  path="/" element={<Home/>} />
 <Route path="/signin" element={<Signin/>} />

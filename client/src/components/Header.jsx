@@ -32,7 +32,7 @@ if(searchtermparam!==null)
 
 
   return (
-    <header className='bg-slate-200 shadow-md'>
+    <header className='bg-slate-200 shadow-md '>
         <div className='flex justify-between items-center max-w-6xl mx-auto p-4'>
             <div className='font-bold text-sm sm:text-xl flex-wrap'>
                 <Link to={"/"}>
@@ -49,7 +49,7 @@ if(searchtermparam!==null)
           <Link to={"/profile"}> 
           {currentuser?
           (<img  className='rounded-full h-10 w-10 object-cover' src={currentuser.avatar} alt='profile'/>)
-          :(<li className='hidden sm:inline text-slate-800 hover:underline'>Sign In</li>)}
+          :(<li className='mr-2 sm:inline text-slate-800 hover:underline'>Sign In</li>)}
            </Link> 
         </ul>
         

@@ -46,7 +46,7 @@ fetchlist()
       {
 listings.imageUrl.map(url=>(<SwiperSlide key={url}>
 
-    <div className='h-[450px]' style={{background:`url(${url}) center no-repeat`, backgroundSize:'cover'}}></div>
+    <div className='h-[600px]' style={{background:`url(${url}) center no-repeat`, backgroundSize:'cover'}}></div>
 
 </SwiperSlide>))
 
@@ -84,10 +84,10 @@ listings.imageUrl.map(url=>(<SwiperSlide key={url}>
             </p>
 
             <div className='flex gap-8 items-center'>
-                <p className='text-white font-semibold bg-red-700 p-2 rounded-md w-full max-w-[200px] text-center'>
+                <p className='text-white font-semibold bg-red-700 p-1 rounded-md w-full max-w-[200px] text-center'>
                     {listings.type=='rent'? 'For Rent':'For Sale'}
                 </p>
-                <p className='text-white font-semibold bg-green-700 p-2 rounded-md w-full max-w-[200px] text-center'>
+                <p className='text-white font-semibold bg-green-700 p-1 rounded-md w-full max-w-[200px] text-center'>
                     { listings.offer ? '₹'+'  '+listings.discountedPrice.toLocaleString('en-US') +' off':'No Offer' } 
                 </p></div>
             <p className='text-slate-900'><b className='text-black font-semibold'>Description-</b> {listings.description}</p>

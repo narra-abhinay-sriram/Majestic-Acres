@@ -62,7 +62,7 @@ const Home = () => {
       offerlistings.map((listing)=>(
         <SwiperSlide key={listing}>
           <div style={{background:`url(${listing.imageUrl[0]}) center no-repeat`,backgroundSize:'cover'}}
-          className="h-[500px]"
+          className="h-[200px] md:h-[450px]"
           ></div>
         </SwiperSlide>
       ))
