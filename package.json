@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build":"cd backend && npm install && cd client && npm run install && npm run build "
+    "start":"node backend/api/index.js",
+"build": "cd backend && npm install && cd ../client && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
