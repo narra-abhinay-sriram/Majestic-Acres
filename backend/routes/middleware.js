@@ -12,7 +12,7 @@ const Middleware=async(req,res,next)=>{
         next()
     }catch(e){
         console.log(e)
-        return res.status(403).json({message:e ,success:"false"})
+        return res.status(403).json({message:e ,success:"false",token:process.env.JWT_SECRET})
     }
 }
 export default Middleware
