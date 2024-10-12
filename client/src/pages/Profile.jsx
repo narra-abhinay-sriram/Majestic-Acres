@@ -74,7 +74,7 @@ const handlesubmit=async(e)=>{
   dispatch(startupdate())
 
 //console.log(formdata.avatar)
-const resp=await fetch("http://localhost:3000/api/v1/user/update/"+currentuser._id,
+const resp=await fetch("https://majestic-acres.onrender.com/api/v1/user/update/"+currentuser._id,
   {
     method:'POST',
     headers:{
@@ -102,7 +102,7 @@ const handledelete=async()=>{
 
 dispatch(deletestart())
 
-const resp=await fetch("http://localhost:3000/api/v1/user/delete/"+currentuser._id,
+const resp=await fetch("https://majestic-acres.onrender.com/api/v1/user/delete/"+currentuser._id,
   {
     method:'DELETE',
     headers:{
@@ -127,7 +127,7 @@ dispatch(deletesuccess())
 
 const handlesignout=async()=>{
 
-const res=await fetch("http://localhost:3000/api/v1/user/signout/",{
+const res=await fetch("https://majestic-acres.onrender.com/api/v1/user/signout/",{
   method:"POST",
   headers:{
     'Content-Type': 'application/json',
@@ -150,7 +150,7 @@ const res=await fetch("http://localhost:3000/api/v1/user/signout/",{
 const handleshowlistings=async()=>{
 
   setlistshowload(true)
-  const resp=await fetch('http://localhost:3000/api/v1/listing/show/'+currentuser._id,
+  const resp=await fetch('https://majestic-acres.onrender.com/api/v1/listing/show/'+currentuser._id,
   {
     method:'GET',
     headers:{
@@ -173,7 +173,7 @@ setlistshowerror('')
 
 const handledeletelisting=async(listing)=>{
 
-const resp=await fetch('http://localhost:3000/api/v1/listing/delete/'+listing,{
+const resp=await fetch('https://majestic-acres.onrender.com/api/v1/listing/delete/'+listing,{
   method:'DELETE',
   headers:{
     'Content-Type': 'application/json',

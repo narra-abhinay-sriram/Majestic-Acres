@@ -42,7 +42,7 @@ useEffect(()=>{
 
     const fetchlist=async()=>{
 
-const resp=await fetch ('http://localhost:3000/api/v1/listing/get/'+params.id,{method:'GET',headers:{
+const resp=await fetch ('https://majestic-acres.onrender.com/api/v1/listing/get/'+params.id,{method:'GET',headers:{
     'Content-Type': 'application/json',
   },
   credentials: 'include'})
@@ -160,7 +160,7 @@ if(formdata.regularPrice<formdata.discountedPrice)
 }
 
     setsubmitload(true)
-    const res=await fetch("http://localhost:3000/api/v1/listing/update/"+params.id,{
+    const res=await fetch("https://majestic-acres.onrender.com/api/v1/listing/update/"+params.id,{
         method:"POST",
         headers:{
           'Content-Type': 'application/json',
