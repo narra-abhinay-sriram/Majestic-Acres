@@ -1,5 +1,5 @@
 import express from "express";
-import {User} from "../api/db.js"
+import {User} from "../db.js"
 import bcryptjs from "bcryptjs"
 import jwt from "jsonwebtoken"
 import Middleware from "./middleware.js"

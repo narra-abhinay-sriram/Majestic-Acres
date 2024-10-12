@@ -1,12 +1,21 @@
-import mongoose from "mongoose";
-import dotenv from "dotenv"
-dotenv.config()
-mongoose.connect(process.env.mongo).then(()=>{
-    console.log("db is connected")
-}).catch((e)=>{
-    console.log(e)
 
-})
+import dotenv from "dotenv"
+
+
+
+dotenv.config();
+
+import mongoose from "mongoose";
+
+//console.log(process.env.MONGO)
+const mongoURI = process.env.MONGO;
+
+mongoose.connect(mongoURI)
+    .then(() => console.log('db is connected'))
+    .catch((e) => {
+        console.error('MongoDB connection failed:', e);
+        process.exit(1); // Exit the application with an error code
+    });
 const userschaema= new mongoose.Schema({
     username:{
         type:String,

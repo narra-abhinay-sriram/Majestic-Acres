@@ -1,5 +1,5 @@
 import express from "express";
-import { Listing } from "../api/db.js";
+import { Listing } from "../db.js";
 import Middleware from "./middleware.js";
 const router =express.Router()
 
