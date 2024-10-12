@@ -10,10 +10,28 @@ const __dirname = path.resolve(); // Get the absolute path of the current direct
 const app = express();
 
 // Set up CORS
+// Set up CORS
 app.use(cors({
-    origin: 'https://enchanting-snickerdoodle-64395c.netlify.app', // Update this to your frontend URL when deployed
+    origin: 'https://enchanting-snickerdoodle-64395c.netlify.app', // Frontend URL
     credentials: true,
+    methods: 'GET,POST,PUT,DELETE', // Allow specific HTTP methods
+    allowedHeaders: 'Content-Type,Authorization', // Allow specific headers
 }));
+// Global CORS headers setup
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://enchanting-snickerdoodle-64395c.netlify.app');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Add allowed HTTP methods
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization'); // Add allowed headers
+
+    // Handle preflight (OPTIONS) requests
+    if (req.method === 'OPTIONS') {
+        return res.status(200).json({});
+    }
+    
+    next(); // Proceed to the next middleware or route handler
+});
+
 
 // Middleware
   
