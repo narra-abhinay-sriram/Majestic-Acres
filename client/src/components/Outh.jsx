@@ -16,7 +16,7 @@ const handleclick=async()=>{
         const auth=getAuth(app)
         const results= await signInWithPopup(auth,provider)
 
-        const resp=await fetch("https://majestic-acres.onrender.com/api/v1/user/google",{method:'POST',headers: {
+        const resp=await fetch("http://localhost:3000/api/v1/user/google",{method:'POST',headers: {
             'Content-Type': 'application/json', 
           },
         body:JSON.stringify({username:results.user.displayName,email:results.user.email,photo:results.user.photoURL})

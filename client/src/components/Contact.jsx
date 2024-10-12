@@ -11,7 +11,7 @@ const [message,setmessage]=useState('')
 useEffect(()=>{
 const fetchuser=async()=>{
 
-    const resp=await fetch("https://majestic-acres.onrender.com/api/v1/user/get/"+listing.userRef,{method:'GET',
+    const resp=await fetch("http://localhost:3000/api/v1/user/get/"+listing.userRef,{method:'GET',
     headers: {
     'Content-Type': 'application/json', 
   },credentials: 'include',})

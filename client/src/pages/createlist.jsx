@@ -135,7 +135,7 @@ if(Number(formdata.regularPrice)<Number(formdata.discountedPrice))
 }
 
     setsubmitload(true)
-    const res=await fetch("https://majestic-acres.onrender.com/api/v1/listing/create/",{
+    const res=await fetch("http://localhost:3000/api/v1/listing/create/",{
         method:"POST",
         headers:{
           'Content-Type': 'application/json',
