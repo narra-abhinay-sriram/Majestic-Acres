@@ -11,7 +11,7 @@ const app = express();
 
 // Set up CORS
 app.use(cors({
-    origin: 'http://localhost:5173', // Update this to your frontend URL when deployed
+    origin: 'https://enchanting-snickerdoodle-64395c.netlify.app', // Update this to your frontend URL when deployed
     credentials: true,
 }));
 
