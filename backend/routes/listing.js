@@ -17,7 +17,8 @@ router.post("/create",Middleware,async(req,res)=>{
 
 router.get("/show/:id",Middleware,async(req,res)=>{
 
-    if(req.user!=req.params.id)
+    if(req.user!=req.params.id)  
+        
     {
         return res.status(403).json({message:"not authorized",success:false})
     }

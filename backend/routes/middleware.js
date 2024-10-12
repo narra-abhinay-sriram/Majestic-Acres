@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken"
 
 const Middleware=async(req,res,next)=>{
 
-    const token=req.cookies.access_token
+   try{ const token=req.cookies.access_token} catch(e){returnres.json({e})}
   //  console.log(token)
   if (!token) {
     return res.status(401).json({ message: "Authentication token is required", success: "false" });
