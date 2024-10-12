@@ -3,7 +3,7 @@ import { Listing } from "../db.js";
 import Middleware from "./middleware.js";
 const router =express.Router()
 
-router.post("/create",Middleware,async(req,res)=>{
+router.post("/create",async(req,res)=>{
 
 
     try{
