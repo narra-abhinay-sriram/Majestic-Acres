@@ -5,6 +5,10 @@ const Middleware=async(req,res,next)=>{
 
     const token=req.cookies.access_token
   //  console.log(token)
+  if (!token) {
+    return res.status(401).json({ message: "Authentication token is required", success: "false" });
+}
+
     try{
         const user=jwt.verify(token,process.env.JWT_SECRET)
        // console.log(user.id)
