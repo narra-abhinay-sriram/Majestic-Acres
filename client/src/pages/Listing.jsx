@@ -44,7 +44,7 @@ fetchlist()
     {listings && <div>
         <Swiper navigation>
       {
-listings.imageUrl.map(url=>(<SwiperSlide key={url}>
+listings.imageUrl.map((url,index)=>(<SwiperSlide key={index}>
 
     <div className='h-[600px]' style={{background:`url(${url}) center no-repeat`, backgroundSize:'cover'}}></div>
 

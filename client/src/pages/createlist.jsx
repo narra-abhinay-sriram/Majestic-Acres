@@ -254,7 +254,7 @@ if(Number(formdata.regularPrice)<Number(formdata.discountedPrice))
        <p className='text-red-700'>{imageerror && imageerror}</p>
        {
         formdata.imageUrl.length>0 && formdata.imageUrl.map((url,index)=>(
-        <div key={url} className='flex justify-between border p-3 items-center'>
+        <div key={index} className='flex justify-between border p-3 items-center'>
      <img src={url} alt='listing image'  className='w-20 h-20 object-contain rounded-md'/>
      <button onClick={()=>handledeleteimage(index)}
        className='text-red-600 text-lg p-3 uppercase hover:opacity-55'>Delete</button>

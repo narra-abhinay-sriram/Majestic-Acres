@@ -201,7 +201,7 @@ navigate(`/search?${searchquery}`)
    {load &&  <p className='text-xl text-slate-700 text-center w-full'>
               Loading...
             </p>}
-            {!load && listings.length>0 && listings.map(listing=><List key={listing._id} listing={listing} />)}
+            {!load && listings.length>0 && listings.map((listing,index)=><List key={index} listing={listing} />)}
             {showmore &&
                 <button
                  onClick={showmoreclick}

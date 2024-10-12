@@ -250,8 +250,8 @@ onClick={handleshowlistings} className='text-green-800 w-full uppercase font-sem
   {listshowload ?"Getting listings":"Show Listings"}</button>
   {listshowerror && <p className='text-red-800'>{listshowerror}</p>}
 
-  {userlistings && userlistings.length>0 && userlistings.map((listing)=>(
-    <div key={listing._id} className='border border-gray-300 rounded-lg p-4 my-2 flex justify-between items-center gap-4'>
+  {userlistings && userlistings.length>0 && userlistings.map((listing,index)=>(
+    <div key={index} className='border border-gray-300 rounded-lg p-4 my-2 flex justify-between items-center gap-4'>
 
 <Link to={`/listing/${listing._id}`}>
 <img 
