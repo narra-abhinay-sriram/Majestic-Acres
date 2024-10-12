@@ -15,12 +15,12 @@ router.post("/create",Middleware,async(req,res)=>{
 
 })
 
-router.get("/show/:id",async(req,res)=>{
+router.get("/show/:id",Middleware,async(req,res)=>{
 
-    // if(req.user!=req.params.id)
-    // {
-    //     return res.status(403).json({message:"not authorized",success:false})
-    // }
+    if(req.user!=req.params.id)
+    {
+        return res.status(403).json({message:"not authorized",success:false})
+    }
     try{
 
     const listing=await Listing.find({userRef:req.params.id})
