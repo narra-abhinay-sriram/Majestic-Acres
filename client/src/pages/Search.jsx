@@ -85,7 +85,7 @@ navigate(`/search?${searchquery}`)
                 
                 const searchquery=urlparams.toString()
                 //console.log(searchquery)
-                const resp=await fetch(`http://localhost:3000/api/v1/listing/get?${searchquery}`,{
+                const resp=await fetch(`https://majestic-acres.onrender.com/api/v1/listing/get?${searchquery}`,{
                                         method:'GET',
                                         headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
                                         }
@@ -113,7 +113,7 @@ navigate(`/search?${searchquery}`)
             
             const searchquery=urlparams.toString()
             //console.log(searchquery)
-            const resp=await fetch(`http://localhost:3000/api/v1/listing/get?${searchquery}`,{
+            const resp=await fetch(`https://majestic-acres.onrender.com/api/v1/listing/get?${searchquery}`,{
                                     method:'GET',
                                     headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
                                     }

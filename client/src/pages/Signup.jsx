@@ -20,7 +20,7 @@ const handlechange=async(e)=>{
 const handleclick=async()=>{
   setload(true)
 
-  const resp=await fetch("http://localhost:3000/api/v1/user/signup",{method:'POST',
+  const resp=await fetch("https://majestic-acres.onrender.com/api/v1/user/signup",{method:'POST',
     headers: {
       'Content-Type': 'application/json', 
 
