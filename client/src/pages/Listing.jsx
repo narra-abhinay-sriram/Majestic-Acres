@@ -27,10 +27,8 @@ const params=useParams()
 useEffect(()=>{
 
 const fetchlist=async()=>{
-    const resp=await fetch('http://localhost:3000/api/v1/listing/get/'+params.listing,{method:'GET',headers:{
-    'Content-Type': 'application/json',
-  },
-  credentials: 'include'})
+    const resp=await fetch('http://localhost:3000/api/v1/listing/get/'+params.listing,{method:'GET',headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
+    }})
 
 const data=await resp.json()
 setlistings(data)

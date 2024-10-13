@@ -77,10 +77,8 @@ const handlesubmit=async(e)=>{
 const resp=await fetch("http://localhost:3000/api/v1/user/update/"+currentuser._id,
   {
     method:'POST',
-    headers:{
-      'Content-Type': 'application/json',
+    headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
     },
-    credentials: 'include',
     body:JSON.stringify(formdata)
 })
 
@@ -105,11 +103,8 @@ dispatch(deletestart())
 const resp=await fetch("http://localhost:3000/api/v1/user/delete/"+currentuser._id,
   {
     method:'DELETE',
-    headers:{
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
-  }
+    headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
+    }}
 )
 
 const data=await resp.json()
@@ -129,10 +124,8 @@ const handlesignout=async()=>{
 
 const res=await fetch("http://localhost:3000/api/v1/user/signout/",{
   method:"POST",
-  headers:{
-    'Content-Type': 'application/json',
-  },
-  credentials: 'include',
+  headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
+  }
   
 })
 
@@ -153,10 +146,8 @@ const handleshowlistings=async()=>{
   const resp=await fetch('http://localhost:3000/api/v1/listing/show/'+currentuser._id,
   {
     method:'GET',
-    headers:{
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include',
+    headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
+    }
   })
 const data=await resp.json()
 //console.log(data.listing)
@@ -175,10 +166,8 @@ const handledeletelisting=async(listing)=>{
 
 const resp=await fetch('http://localhost:3000/api/v1/listing/delete/'+listing,{
   method:'DELETE',
-  headers:{
-    'Content-Type': 'application/json',
-  },
-  credentials: 'include',
+  headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
+  }
 })
 
 const data=await resp.json()

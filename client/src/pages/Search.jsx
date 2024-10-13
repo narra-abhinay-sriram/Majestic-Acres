@@ -87,10 +87,8 @@ navigate(`/search?${searchquery}`)
                 //console.log(searchquery)
                 const resp=await fetch(`http://localhost:3000/api/v1/listing/get?${searchquery}`,{
                                         method:'GET',
-                                        headers:{
-                                                  'Content-Type': 'application/json',
-                                                },
-                                         credentials: 'include',
+                                        headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
+                                        }
                                         })
                 const data=await resp.json()
                 if(data.length>8)
@@ -117,10 +115,8 @@ navigate(`/search?${searchquery}`)
             //console.log(searchquery)
             const resp=await fetch(`http://localhost:3000/api/v1/listing/get?${searchquery}`,{
                                     method:'GET',
-                                    headers:{
-                                              'Content-Type': 'application/json',
-                                            },
-                                     credentials: 'include',
+                                    headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
+                                    }
                                     })
             const data=await resp.json()
             if(data.length>8)

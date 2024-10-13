@@ -42,10 +42,10 @@ useEffect(()=>{
 
     const fetchlist=async()=>{
 
-const resp=await fetch ('http://localhost:3000/api/v1/listing/get/'+params.id,{method:'GET',headers:{
-    'Content-Type': 'application/json',
-  },
-  credentials: 'include'})
+const resp=await fetch ('http://localhost:3000/api/v1/listing/get/'+params.id,
+    {method:'GET',headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
+    }})
+  
 const data=await resp.json()
 
 if (data.success === false) {
@@ -162,10 +162,8 @@ if(formdata.regularPrice<formdata.discountedPrice)
     setsubmitload(true)
     const res=await fetch("http://localhost:3000/api/v1/listing/update/"+params.id,{
         method:"POST",
-        headers:{
-          'Content-Type': 'application/json',
+        headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
         },
-        credentials: 'include',
         body:JSON.stringify({
             ...formdata,
             userRef:currentuser._id

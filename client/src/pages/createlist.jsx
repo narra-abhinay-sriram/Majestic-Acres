@@ -139,6 +139,7 @@ if(Number(formdata.regularPrice)<Number(formdata.discountedPrice))
         method:"POST",
         headers:{
           'Content-Type': 'application/json',
+          'authorization':localStorage.getItem('token')
         },
         credentials: 'include',
         body:JSON.stringify({

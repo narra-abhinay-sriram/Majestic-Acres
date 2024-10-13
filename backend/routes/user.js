@@ -51,7 +51,7 @@ const {password,email}=req.body
 
                           const {password:pass,...rest}=validuser._doc
 
-              return res.cookie("access_token",token,{httpOnly:true}).status(200).json({rest,success:"true"})}
+              return res.status(200).json({rest,success:"true",token})}
          catch(e)
          {
                       return res.json({message:"something went wrong",success:"false"})
@@ -83,7 +83,7 @@ try{
          const token=jwt.sign({id:user._id},process.env.JWT_SECRET)
          const {password:pass,...rest}=user._doc
      
-         res.cookie("access_token",token,{httpOnly:true,sameSite: 'None'}).status(200).json({rest})
+         res.status(200).json({rest,token})
 
     }
 

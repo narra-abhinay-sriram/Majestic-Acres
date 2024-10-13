@@ -5,7 +5,7 @@ import { signfailue, signsuccess, startsign } from '../redux/userSlice'
 import Outh from '../components/Outh'
 
 
-const Signup = () => {
+const Signin = () => {
 
 const [formdata,setformdata]=useState({})
 
@@ -26,18 +26,17 @@ const handlechange=async(e)=>{
 const handleclick=async()=>{
 dispatch(startsign())
   const resp=await fetch("http://localhost:3000/api/v1/user/signin",{method:'POST',
-    headers: {
-    'Content-Type': 'application/json', 
-  },credentials: 'include',
+    headers:{    'Content-Type': 'application/json', 
+    },
     body:JSON.stringify(formdata)})
   const data=await resp.json()
-  console.log(data)
 if(data.success=="false")
 {
  dispatch(signfailue(data.message))
   return
 }
 dispatch(signsuccess(data.rest))
+localStorage.setItem('token',data.token)
 navigate("/")
 }
 
@@ -66,4 +65,4 @@ navigate("/")
   )
 }
 
-export default Signup
+export default Signin

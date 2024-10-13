@@ -18,21 +18,23 @@ const Home = () => {
   useEffect(()=>{
   const offerfetch=async()=>{
 
-    const resp =await fetch(`http://localhost:3000/api/v1/listing/get?offer=true&limit=3`,{method:'GET',headers:{'Content-Type': 'application/json' }, credentials: 'include' })
+    const resp =await fetch(`http://localhost:3000/api/v1/listing/get?offer=true&limit=3`,{method:'GET',headers:{Authorization:localStorage.getItem("token"),'Content-Type': 'application/json', } })
     const data=await resp.json()
     setofferlistings(data)
     salefetch()
   }
   const salefetch=async()=>{
 
-    const resp =await fetch(`http://localhost:3000/api/v1/listing/get?type=sale&limit=3`,{method:'GET',headers:{'Content-Type': 'application/json' }, credentials: 'include' })
+    const resp =await fetch(`http://localhost:3000/api/v1/listing/get?type=sale&limit=3`,{method:'GET',headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
+    }})
     const data=await resp.json()
     setsalelistings(data)
    rentfetch()
   }
   const rentfetch=async()=>{
 
-    const resp =await fetch(`http://localhost:3000/api/v1/listing/get?type=rent&limit=3`,{method:'GET',headers:{'Content-Type': 'application/json' }, credentials: 'include' })
+    const resp =await fetch(`http://localhost:3000/api/v1/listing/get?type=rent&limit=3`,{method:'GET',headers:{Authorization:localStorage.getItem("token"),    'Content-Type': 'application/json', 
+    } })
     const data=await resp.json()
     setrentlistings(data)
 

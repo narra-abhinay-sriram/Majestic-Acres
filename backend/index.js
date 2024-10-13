@@ -9,13 +9,9 @@ import mainRouter from "./routes/index.js";
 const app = express();
 
 // Set up CORS
-app.use(cors({
-    origin: 'http://localhost:5173', // Update this to your frontend URL when deployed
-    credentials: true,
-}));
+app.use(cors());
 
 // Middleware
-app.use(cookieParser());
 app.use(express.json());
 
 // Routes
